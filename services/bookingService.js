@@ -1,19 +1,25 @@
 const redisClient = require("../redisClient");
 
-exports.bookSeat = async (seat) => {
+const bookSeat = async (seatId) => {
 
-    const lockKey = `lock:seat:${seat}`;
+  const lockKey = `lock:${seatId}`;
 
-    const lock = await redisClient.set(lockKey, "locked", {
-        NX: true,
-        EX: 10
-    });
+  const lock = await redisClient.set(lockKey, "locked", {
+    NX: true,
+    EX: 10
+  });
 
-    if (!lock) {
-        return { message: "Seat already locked by another user" };
-    }
+  if (!lock) {
+    return {
+      success: false,
+      message: "Seat already locked"
+    };
+  }
 
-    console.log("Booking seat:", seat);
-
-    return { message: "Seat booked successfully" };
+  return {
+    success: true,
+    message: "Seat booked successfully"
+  };
 };
+
+module.exports = { bookSeat };
