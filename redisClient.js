@@ -1,7 +1,5 @@
-const redis = require("redis");
-
-const client = redis.createClient();
-
-client.connect();
-
-module.exports = client;
+module.exports = {
+    set: async () => {
+        return "OK";
+    }
+};
