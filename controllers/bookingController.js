@@ -1,7 +1,12 @@
 const bookingService = require("../services/bookingService");
 
-exports.bookSeat = async (req, res) => {
-    const seat = req.body.seat;
-    const result = await bookingService.bookSeat(seat);
-    res.send(result);
+const bookSeat = async (req, res) => {
+
+  const { seatId } = req.body;
+
+  const result = await bookingService.bookSeat(seatId);
+
+  res.json(result);
 };
+
+module.exports = { bookSeat };
